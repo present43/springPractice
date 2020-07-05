@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 此工程主要讲解 Bean 对象的一些细节
+            1. 创建 bean 对象的三种方式
+            2. Bean 对象的作用范围
+            3. Bean 对象的生命周期
+       -->
+
+    <!--  这个是第一种方法， 通过默认的构造函数获取
+           条件： 需要类的默认构造器 ，想要获取取的对象 就是配置全类名的 实例对象
+    <bean id="AccountServiceImpl" class="com.liuzheng.service.Impl.AccountServiceImpl"></bean>
+       -->
+
+
+    <!--  第二种方式 ，使用普通工厂中的方法 来创建对象（使用某个类中的方法来创建对象，并存入Bean 容器）   -->
+    <!--  先创建工厂类的实例，然后加入到Bean 容器   -->
+    <bean id="InstanceFactory" class="com.liuzheng.beanFactory.InstanceFactory"></bean>
+    <!--  告诉 bean 容器 需要通过 那个工厂实例去取, 标注对应的方法   -->
+    <bean id="AccountServiceImpl" factory-bean="InstanceFactory" factory-method="getAccountServiceImpl"></bean>
+
+
+    <!--  第三种方式 ,  需要从工厂类里的 静态方法里去取对应的实例
+
+    <bean id="AccountServiceImpl" class="com.liuzheng.beanFactory.StaticFactory" factory-method="getAccountServiceImpl"></bean>
+
+      -->
+</beans>

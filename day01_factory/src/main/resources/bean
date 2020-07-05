@@ -1,0 +1,2 @@
+AccountServiceImpl = com.liuzheng.serviceImpl.AccountServiceImpl
+AccountDAO = com.liuzheng.dao.AccountDAO

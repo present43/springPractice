@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 此工程主要讲解 Bean 对象的一些细节
+            1. 创建 bean 对象的三种方式
+            2. Bean 对象的作用范围
+                可以根据Bean标签里的 scope  属性来进行设置 一共有五种
+                        singleton : 单例模式 (即Bean对象只有一个)
+                        Prototype : 多例模式 (每次从容器里取出来的对象不是同一个对象,看Controller 里的比较)
+                        Request : 一次Web 请求范围
+                        session : 一次会话范围
+                        global-session : 集群的一次会话范围 , 如果是单体式架构则和上面的Session 一致
+            3. Bean 对象的生命周期
+                        单例: 随着容器的创建而创建,随着容器的销毁而销毁 (一读取配置文件就创建了)
+                        多例: 多例为延迟加载机制,即当我们需要使用时才创建,只有还在使用就都不会死亡,最后是需要通过JVM的GC来进行回收的
+                              使用的回收算法:引用计数\可达性分析.
+       -->
+
+    <!--  这个是第一种方法， 通过默认的构造函数获取
+           条件： 需要类的默认构造器 ，想要获取取的对象 就是配置全类名的 实例对象
+    <bean id="AccountServiceImpl" class="com.liuzheng.service.Impl.AccountServiceImpl"></bean>
+       -->
+
+
+    <!--  第二种方式 ，使用普通工厂中的方法 来创建对象（使用某个类中的方法来创建对象，并存入Bean 容器）   -->
+    <!--  先创建工厂类的实例，然后加入到Bean 容器   -->
+    <bean id="InstanceFactory" class="com.liuzheng.beanFactory.InstanceFactory"></bean>
+    <!--  告诉 bean 容器 需要通过 那个工厂实例去取, 标注对应的方法   -->
+    <bean id="AccountServiceImpl" factory-bean="InstanceFactory" factory-method="getAccountServiceImpl"></bean>
+
+
+    <!--  第三种方式 ,  需要从工厂类里的 静态方法里去取对应的实例
+
+    <bean id="AccountServiceImpl" class="com.liuzheng.beanFactory.StaticFactory" factory-method="getAccountServiceImpl"></bean>
+
+      -->
+</beans>

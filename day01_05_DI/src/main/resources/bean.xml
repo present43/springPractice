@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <!-- 此工程主要 介绍和学习spring 的依赖注入
+            依赖注入:
+                Dependency Injection
+            IOC作用:
+                降低程序之间的耦合
+            依赖关系的管理:
+                都交给spring来维护,在配置文件中说明依赖关系的维护 就称之为依赖注入
+            能注入的数据类型:
+                基本类型和 String
+                其他 Bean类型 (在配置文件中配置过的bean)
+                复杂类型/集合类型
+            注入的方式: 有三种
+                第一种: 使用构造函数
+                    标签中的属性 一共有五种 :
+                        name  : 根据 构造函数中指定的名称的参数赋值     这个最常用
+                        index : 根据构造函数中 数据的索引赋值.索引从零开始
+                        type  : 用于指定数据类型进行注入
+                        ============================以上三个用于指定给构造函数在哪个参数赋值=================
+                        ref   : 可以注入的 为引用类型的数据,比如说Bean 容器里的其他对象
+                        value : 用于提供基本类型和 string 类型的数据
+
+                第二种: 使用set 方法提供
+                    标签中的属性 一共三种 :
+                         name  : 根据 set方法名称  注入    这个最常用
+                         ref   : 可以注入的 为引用类型的数据,比如说Bean 容器里的其他对象
+                         value : 用于提供基本类型和 string 类型的数据
+
+                第三种: 使用注解注入
+    -->
+    <!-- 创建一个 日期对象   -->
+    <bean id="now" class="java.util.Date"></bean>
+
+    <!--  第一种方法,通过构造函数 注入数据
+        特点: 需要提供 构造函数所需要的 所有属性
+       -->
+    <bean id="AccountServiceImpl" class="liuzheng.service.Impl.AccountServiceImpl">
+        <constructor-arg name="name" value="大帅哥"> </constructor-arg>
+        <constructor-arg name="age" value="12"> </constructor-arg>
+        <!-- 引入日期对象 -->
+        <constructor-arg name="birthday" ref="now"> </constructor-arg>
+    </bean>
+
+    <!--  第二种方法 , 通过 set 方法进行注入
+           特点: 不需要 提供所有的属性
+     -->
+    <bean id="AccountServiceImpl2" class="liuzheng.service.Impl.AccountServiceImpl2">
+        <property name="age" value="13"></property>
+        <property name="name" value="大聪明"></property>
+        <!--   复杂类型的数据注入      -->
+
+    </bean>
+</beans>
