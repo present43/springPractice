@@ -26,13 +26,16 @@ public class Control {
         // AccountServiceImpl accountService = new AccountServiceImpl();
         //  从spring 里取
         // 获取 bean 对象
-        ApplicationContext ac  = new ClassPathXmlApplicationContext("bean.xml");
+        ClassPathXmlApplicationContext ac  = new ClassPathXmlApplicationContext("bean.xml");
 
         // 通过对象容器  获取需要的资源  传入键值（ID）
         AccountServiceImpl accountService = (AccountServiceImpl) ac.getBean("AccountServiceImpl");
         AccountServiceImpl accountService2 = ac.getBean("AccountServiceImpl",AccountServiceImpl.class);
         String account = "liu";
         accountService.saveAccount(account);
+
+        // 关闭容器 调用销毁方法 销毁方法需要自定义 只是 提供了这种方法
+        ac.close();
 
     }
 
