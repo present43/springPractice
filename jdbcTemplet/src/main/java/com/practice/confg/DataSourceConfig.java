@@ -8,9 +8,16 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+/* 声明为配置类 */
 @Configuration
+/* 引入入 property 文件  */
 @PropertySource("")
+/* 开启 事务注解*/
+@EnableTransactionManagement
+/* 包扫描 */
 @ComponentScan(basePackages = {"com.practice"})
 public class DataSourceConfig {
 
@@ -41,5 +48,12 @@ public class DataSourceConfig {
         return jdbcTemplate;
     }
 
+    /*创建事务管理器 使用 jdbc 模板的事务管理器 */
+    @Bean
+    public DataSourceTransactionManager TransactionManager() {
+        DataSourceTransactionManager transactionManager = new DataSourceTransactionManager();
+        transactionManager.setDataSource(dataSource);
+        return transactionManager;
+    }
 
 }
